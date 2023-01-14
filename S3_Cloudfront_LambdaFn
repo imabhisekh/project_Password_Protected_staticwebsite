@@ -1,0 +1,26 @@
+Providing password-based access to a private S3 bucket with Lambda and CloudFront
+
+i have some website and i have to host from my s3 bucket, but the problem is i have to make public my bucket so i think its not a good way to public your bcuket
+so i used instead of se cloudfront service with using lambda function for password protection on that , 
+i just login using my user and password to the website , its a static website basically if i use dynamic website it will have database .
+
+so here i have started 
+
+first step is to create bucket .
+now add file or code to the bucket 
+
+now go to lambda function 
+function name <> >> change default execution role <create role > role name > policy tamplete choose <Basic Lambda@Edge permissions (for CloudFront trigger)>
+create function > copy paste code in that add user password  and click on deploy >> action >publish new version >> copy arn 
+
+now go to cloud watch paste that arn in > Function associations > Viewer request > lambda@edge > paste arn in that box.
+in cloudwatch 
+Origin domain<choose s3 bucket name>
+Origin access <Legacy access identities>
+
+Yes, update the bucket policy
+Default root object - optional <index.html>
+ 
+ 
+now copy Distribution domain name and paste it to google
+
