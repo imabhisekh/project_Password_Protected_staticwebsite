@@ -1,0 +1,25 @@
+exports.handler = (event, context, callback) => {
+// take the req and header
+  const request = event.Records[0].cf.request;
+  const headers = request.headers;
+// configuring credentials
+  const user = 'userName';
+  const password = 'password';
+// create a authString
+  const authString = 'Basic ' + new Buffer(user + ':' + password).toString('base64');
+// check if the user is authenticated by entering correct credentials
+  if (typeof headers.authorization == 'undefined' || headers.authorization[0].value != authString) {
+    const response = {
+      status: '401',
+      statusDescription: 'Unauthorized',
+      body: 'Entered Credentials are Incorrect!!!',
+      headers: {
+        'www-authenticate': [{key: 'WWW-Authenticate', value:'Basic'}]
+      },
+    };
+    // if creds are wrong pass the res containing 401
+    callback(null, response);
+  }
+// else => creds are correct pass the original request
+  callback(null, request);
+};
