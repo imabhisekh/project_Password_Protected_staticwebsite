@@ -1,3 +1,4 @@
+'use_strict';
 exports.handler = (event, context, callback) => {
 // take the req and header
   const request = event.Records[0].cf.request;
